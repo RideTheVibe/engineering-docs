@@ -1,0 +1,37 @@
+---
+title: Control Box
+description: Wiring, components, and architecture of the control box.
+tags:
+  - electrical
+  - control
+  - wiring
+sidebarPosition: 3
+---
+
+import ImageProvider from "../../../src/Components/ImageProvider.tsx";
+import controlBoxOverviewLight from "./images/ControlBoxSystemDiagram.png";
+import controlBoxOverviewDark from "./images/ControlBoxSystemDiagramDark.png";
+
+The Control Box is the main subsystem that hosts the power delivery, balancing control, and safety cut-off wiring. The box
+provides an interface to the motor controller and the safety/power switches
+
+<ImageProvider lightImage={controlBoxOverviewLight} darkImage={controlBoxOverviewDark}></ImageProvider>
+
+---
+
+## Components
+
+| Component | Part | Link | Functionality                                                                           |
+|-----------|------|------|-----------------------------------------------------------------------------------------|
+| Motor Controller | VESC 6 MKII | [Link](https://trampaboards.com/vesc-100v-250a-mkii-p-28113.html) | Drives motor, runs balancing firmware.                                                                      |
+| IMU Sensor | DMU11 IMU | [Link](https://siliconsensing.com/product/dmu11) | Provides orientation data for balancing control.                |
+| Signal Converter | RS422 → TTL Converter | [Link](https://www.commfront.com/products/industrial-rs422-rs485-to-ttl-5v-converter?variant=39593862824033) | Converts IMU RS422 output to TTL for the Motor Controller (VESC).                                  |
+| Battery Management | JFBMS32 | [Link](https://jetfleetstore.com/products/jfbms32) | Monitors, balances, and protects battery cells from over voltage and cell voltage mismatches. |
+| Battery Pack | 6S LiPo x 3 | [Link](https://chinahobbyline.com/products/cnhl-20000mah-22-2v-6s-15c-lipo-battery-with-xt90-plug) | Energy source (~72 V nominal) for hub motor and logic systems.                      |
+| Inrush Protection | AntiSpark Circuit | [Link](https://www.amazon.com/Flipsky-Aluminum-Electric-Skateboard-Scooter/dp/B0BX2Q5C6J/ref=pd_lpo_d_sccl_1/143-4896464-7227407?pd_rd_w=RSY1d&content-id=amzn1.sym.4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_p=4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_r=B2GXG5NGTFKN9Z2SBG3H&pd_rd_wg=PLEuD&pd_rd_r=4dd8fe14-87ce-449a-b194-2bdf0fd46757&pd_rd_i=B0BX2Q5C6J&psc=1#averageCustomerReviewsAnchor) | Limits current surge when connecting high-voltage battery to the VESC.                  |
+| Emergency Stop | E-Stop Switch | [Link](https://www.napaonline.com/en/p/GRO822100) | Cuts drive enable signal when pressed, immediate system shutdown.              |
+| Power Control | Power Switch | [Link](https://www.amazon.com/Flipsky-Aluminum-Electric-Skateboard-Scooter/dp/B0BX2Q5C6J/ref=pd_lpo_d_sccl_1/143-4896464-7227407?pd_rd_w=RSY1d&content-id=amzn1.sym.4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_p=4c8c52db-06f8-4e42-8e56-912796f2ea6c&pf_rd_r=B2GXG5NGTFKN9Z2SBG3H&pd_rd_wg=PLEuD&pd_rd_r=4dd8fe14-87ce-449a-b194-2bdf0fd46757&pd_rd_i=B0BX2Q5C6J&psc=1#averageCustomerReviewsAnchor) | Main on/off switch, routes power through the AntiSpark circuit to the VESC.             |
+
+---
+
+## Electrical Schematic
