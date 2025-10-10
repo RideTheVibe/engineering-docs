@@ -9,8 +9,10 @@ sidebarPosition: 3
 ---
 
 import ImageProvider from "../../../src/Components/ImageProvider.tsx";
-import controlBoxOverviewLight from "./images/ControlBoxSystemDiagram.png";
+import controlBoxOverviewLight from "./images/ControlBoxSystemDiagramLight.png";
 import controlBoxOverviewDark from "./images/ControlBoxSystemDiagramDark.png";
+import electricalDiagramLight from "./images/ElectricalDiagramLight.png";
+import electricalDiagramDark from "./images/ElectricalDiagramDark.png";
 
 The Control Box is the main subsystem that hosts the power delivery, balancing control, and safety cut-off wiring. The box
 provides an interface to the motor controller and the safety/power switches
@@ -35,3 +37,5 @@ provides an interface to the motor controller and the safety/power switches
 ---
 
 ## Electrical Schematic
+
+<ImageProvider lightImage={electricalDiagramLight} darkImage={electricalDiagramDark}></ImageProvider>
