@@ -1,4 +1,4 @@
 {
-  "pages": ["ControlBoxWiring", "BMS"],
+  "pages": ["ControlBoxWiring", "BMS", "IMUToVesc"],
   "defaultOpen": true
 }

@@ -1,0 +1,78 @@
+---
+title: Inertial Measurement Unit
+description: (DMU11)
+---
+
+
+The [**DMU11**](https://siliconsensing.com/product/dmu11) is the primary **Inertial Measurement Unit (IMU)** for Vibe, which provides precise 6-axis motion data used by the balance PID control system to maintain balance.
+The motor controller used in Vibe (VESC) has a built-in IMU that works to an extent, but in my experience the measurements tend to drift and can cause nose-dives on rough or uneven roads due to their poor vibration related performance.
+
+
+The DMU11, on the other hand, offers excellent vibration resistance due to it's unique ring vibrating structure, making a significant difference in maintaining low drift and accuracy of the positioning data.
+
+>Our gyroscopes use a ring as the vibrating structure suspended by legs around the ring. This means that the sensor is balanced and symmetrical and therefore shocks and vibration will not cause any undesirable motion that would be observed in a non-balanced structure such as a tuning fork. - Silicon Sensing (DMU11 Manufacturer)
+
+Significant amount of research went into picking a reliable IMU for the Vibe's control system and DMU11 was the choice given the cost/quality factor. The robustness of the IMU contributes significantly to the safety of the Vibe.
+
+| DMU11 Property | Value |
+|------------|--------|
+| Comm. Protocol | RS-422 Serial |
+| Baud Rate | 460,800 bps |
+| Update Rate | 200 Hz |
+| Output Data format | See DMU11 Output Data Frame table at the end |
+
+---
+
+## DMU11 \<-\> VESC interface
+
+The DMU11 communicates using a **RS-422 differential serial interface**, which is a standard communication protocol in Industrial Control systems.
+
+The VESC motor controller supports SPI, CAN, I2C and **UART**. Since the UART port is not being used on the VESC for the Vibe project,
+the best way forward for the moment is to convert the RS422 serial output to the UART (TTL) using a converter.
+
+
+import ImageProvider from "../../../src/Components/ImageProvider";
+import dmuWiringDiagramLight from "./images/DMUWiringDiagramLight.png";
+import dmuWiringDiagramDark from "./images/DMUWiringDiagramDark.png";
+import dmuBreakoutBoard from "./images/sm_black_top.png";
+
+<ImageProvider lightImage={dmuWiringDiagramLight} darkImage={dmuWiringDiagramDark}/>
+
+## DMU11 Breakout board
+
+import {DownloadCard} from "../../../src/Components/DownloadCard/DownloadFile";
+
+Please use the following gerber files with your PCB manufacturer of choice to produce the DMU11 Breakout board, which makes it easy to wire up the IMU to the RS422-TTL converter.
+<ImageProvider lightImage={dmuBreakoutBoard} darkImage={dmuBreakoutBoard}/>
+
+<DownloadCard fileName={"DMU11-BreakoutBoard-gerber.zip"} fileLocation={"/files/dmu11-mating-connector.zip"} />
+
+---
+
+## DMU11 Output Data Frame
+
+As obtained from the [datasheet](https://siliconsensing.com/wp-content/uploads/dmu11-00-0100-132-rev5-datasheet.pdf). Being provided here for quick reference.
+| Item | Word | Data Item | Value / Unit |
+|------|-------|------------|---------------|
+| 0 | 0 | Header | 16 Bit, 0x55AA |
+| 1 | 1 | Message Count | 16 Bit, 0 to 65535 decimal |
+| 2 | 2–3 | Axis X Rate | 32 Bit Single Precision FP, (°/s) |
+| 3 | 4–5 | Axis X Acceleration | 32 Bit Single Precision FP, (g) |
+| 4 | 6–7 | Axis Y Rate | 32 Bit Single Precision FP, (°/s) |
+| 5 | 8–9 | Axis Y Acceleration | 32 Bit Single Precision FP, (g) |
+| 6 | 10–11 | Axis Z Rate | 32 Bit Single Precision FP, (°/s) |
+| 7 | 12–13 | Axis Z Acceleration | 32 Bit Single Precision FP, (g) |
+| 8 | 14–15 | Reserved | Reserved |
+| 9 | 16–17 | Average IMU Temperature | 32 Bit Single Precision FP, (°C) |
+| 10 | 18–19 | Axis X Delta Theta | 32 Bit Single Precision FP, (°) |
+| 11 | 20–21 | Axis X Delta Velocity | 32 Bit Single Precision FP, (m/s) |
+| 12 | 22–23 | Axis Y Delta Theta | 32 Bit Single Precision FP, (°) |
+| 13 | 24–25 | Axis Y Delta Velocity | 32 Bit Single Precision FP, (m/s) |
+| 14 | 26–27 | Axis Z Delta Theta | 32 Bit Single Precision FP, (°) |
+| 15 | 28–29 | Axis Z Delta Velocity | 32 Bit Single Precision FP, (m/s) |
+| 16 | 30 | System Startup BIT Flags | 16 Bit decimal value |
+| 17 | 31 | System Operation BIT Flags | 16 Bit decimal value |
+| 18 | 32 | Reserved | Reserved |
+| 19 | 33 | Checksum | 16 Bit 2’s Complement of the 16 Bit Sum of the Previous 0–18 Data Items |
+
+
