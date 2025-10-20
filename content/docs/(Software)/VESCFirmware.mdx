@@ -1,0 +1,63 @@
+---
+title: Firmware
+description: VESC Firmware
+---
+
+To support the DMU11 IMU on the VESC motor controller, a custom firmware must be flashed on the VESC.
+
+Please find the source code here: [github](https://github.com/RideTheVibe)
+
+There are two options to load the firmware onto the VESC, one is to flash it using VESC tool,
+and second is to flash it from the CLI using a SWD connector like a J-Link. The former is the quickest way to do it, but the later is better when doing iterations of the firmware (making changes and testing).
+
+
+### Custom Firmware Bin
+
+Please download the custom firmware for the VESC with DMU11 support:
+
+import {DownloadCard} from "../../../src/Components/DownloadCard/DownloadFile";
+
+<DownloadCard fileName={"Vibe-VESC-FW6.05"} fileLocation={"/files/vibe-vescfwv6.05-100_250_mkiii.bin"}/>
+
+
+### Build from source
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
+
+
+<Steps>
+    <Step>
+        Clone the github repository from [github](https://github.com/RideTheVibe)
+    </Step>
+    <CodeBlock allowCopy ><Pre>git clone</Pre></CodeBlock>
+
+    <Step>
+        Create virtual python environment
+    </Step>
+    <CodeBlock allowCopy keepBackground lang={"sh"}>
+        <Pre>python3 -m venv vibe-venv
+             source vibe-venv/bin/activate</Pre>
+    </CodeBlock>
+    <Step>
+        Install ARM SDK
+    </Step>
+    <CodeBlock allowCopy keepBackground lang={"sh"}>
+        <Pre>make arm_sdk_install</Pre>
+    </CodeBlock>
+    <Step>
+        Build
+    </Step>
+    <CodeBlock allowCopy keepBackground lang={"sh"}>
+        <Pre>make 100_250_mkiii</Pre>
+    </CodeBlock>
+
+    <Step>
+        Flash (J-Link)
+    </Step>
+    <CodeBlock allowCopy keepBackground lang={"sh"}>
+        <Pre>make 100_250_mkiii_flash</Pre>
+    </CodeBlock>
+</Steps>
+
+
