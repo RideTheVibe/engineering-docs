@@ -1,0 +1,37 @@
+---
+title: Balance Loop
+description: All options for PID balance loop.
+---
+
+To self balance the Vibe, we need some sort of control loop that will take in the IMU positional data from DMU11 and proportionally apply motor
+current to keep the wheel under the rider. This is the working principle of the Vibe, as described more in detail [here](/docs/HowDoesVibeWork).
+
+
+## Software choices
+
+From a software perspective there are two options for the VESC based controller Vibe uses:
+- Bake in a PID loop into the [Vibe VESC firmware](/docs/VESCFirmware)
+- Use an existing package that can be installed and independently configured.
+
+I considered going with option 1 and expanding on my experience of having written a PID loop for self-balancing vehicles [before](https://github.com/ChitlangeSahas/UniWheel), but during my research I realised that the
+open source self-balancing community has come far since I last dabbled into it in 2017 and there are multiple VESC Packages that get the job done for now.
+
+It is worthwhile to note that the VESC packages were designed for board based OneWheel-s in mind and I have found that even though most of the mechanics translates well, there are some bike specific experience related tuning that I would like to add to the loop such as how the Vibe behaves on down-hill vs up-hill climbs and the braking behavior. Going forward, based on the feedback I receive, we may choose to fork a package and build upon.
+
+## PID Parameters - Refloat Package
+Vibe currently uses the [Refloat](https://github.com/lukash/refloat) package for the PID loop. Lukáš Hrázký, the author and the community has done an excellent job building and maintaining this package.
+
+I have found the following PID and IMU filtering parameters to work the best for the Vibe:
+
+
+| Parameter | Description |  Value |
+|------------|--------------|----------------|
+| `kp` | Proportional gain | 24.0 |
+| `ki` | Integral gain | 0.135 |
+| `kd` | Derivative gain | 1.35 |
+| Pitch Kp |Mahoney filter Pitch Proportional Gain | 0.7 |
+| Roll Kp |Mahoney filter Roll Proportional Gain | 0.7 |
+| constant tiltback | Upon reaching certain RPM, an offset to the setpoint is applied to help the rider lean into it | -2.4 |
+| constant tiltback RPM | RPM threshold for constant tiltback | 500 |
+| sample rate | Update frequency for the PID loop. | 200 |
+
