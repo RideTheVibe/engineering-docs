@@ -1,6 +1,13 @@
 {
   "pages": [
     "---Getting Started---",
+    "index",
+    "AllDownloadables",
+    "BOM",
+    "---A Word---",
+    "DesignPhilosophy",
+    "HowDoesVibeWork",
+    "---The Engineering---",
     "..."
   ]
 }

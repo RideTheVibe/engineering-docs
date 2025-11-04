@@ -1,16 +1,53 @@
 ---
 title:  Overview
-description: Frame design, build etc.
+description: Fabrication Overview
 ---
 
-methods used
-outsourcing fabrication
-doing it yourself
- - finding hackerspaces
+The following methods of manufacturing are used to fabricate the parts that Vibe is built with along with suggestions to source these services (not sponsored):
+
+import ImageProvider from "../../../src/Components/ImageProvider";
+import overview from "./images/Overview.png";
+
+<ImageProvider lightImage={overview} darkImage={overview} height={800}/>
+
+| Manufacturing Method        | Description / Tools Used                  | Sourcing Options                                                           |
+|-----------------------------|-------------------------------------------|----------------------------------------------------------------------------|
+| **Steel Tube Bending**      | 1 inch tube with 3" CLR bending die        | Local metal fabrication or tubing shops. From my research, custom car muffler fabrication shops have reasonable prices for this service.                                  |
+| **MIG Welding**             | For frame joints and structural assembly  | Welding and fabrication services                                           |
+| **Sheet Metal Cutting/Bending** | Used for control box enclosure       | [SendCutSend](https://www.sendcutsend.com)                                 |
+| **3D Printing** | For electronics enclosures | Local makerspaces or 3D printing bureaus                                   |
 
 
-IMU Enclosure
+### Parametric CAD Design
 
-Parametric Design!!!!
+The mechanical design of the Vibe was digitally produced in Fusion 360 CAD software, (see fusion file in [downloadables](/docs/AllDownloadables)).
+To help build a scalable design that is easily customizable for different sizes of dropout distances/axle sizes and/or seat heights, the modelling in Fusion was done with parametric design in mind.
+Here are some of the available parameters that can be edited to produce frames of different sizes:
 
-Dashboard enclosure
+To access/modify these parameters, look under `(Design Workspace) -> Solid -> Modify -> Change Parameters`
+
+| Section              | Parameter Name               |  Value | Unit | Comments                                                                                  |
+|-----------------------|------------------------------|--------------------|------|-------------------------------------------------------------------------------------------|
+| **Hub Motor / Axle**  | **HubMotorDiameter**         | 12.00              | in   | —                                                                                         |
+|                       | **RimDiameter**              | 18.00              | in   | —                                                                                         |
+|                       | **AxleLength**               | 11.22              | in   | —                                                                                         |
+|                       | **AxleProtrusion**           | 1.614              | in   | Distance from flange face to end of axle = Axle Protrusion                                |
+|                       | **HubMotorWidth**            | 4.252              | in   | —                                                                                         |
+|                       | **AxleDiameter**             | 18.00              | mm   | M18 Size Axle                                                                             |
+|                       | **DropoutDistance**          | 8.68               | in   | Center-to-center of dropouts (see wheel axle terminology diagram)                         |
+|                       | **AxleFlange**               | 6.00               | mm   | —                                                                                         |
+|                       | **WasherThickness**          | 2.70               | mm   | Washer thickness for the axle (stack multiple to adjust dropout distance)                 |
+| **Frame Tubing**      | **FrameLargePipeOD**         | 1.05               | in   | Outer Diameter of the tube used in the frame                                              |
+|                       | **FrameLargePipeWall**       | 0.113              | in   | Wall thickness of the tube used in the frame                                              |
+|                       | **BendRadius**               | 3.00               | in   | Tube bend radius die                                                                      |
+|                       | **CopingDistance**           | 0.30               | in   | Tube coping distance                                                                      |
+| **Dropout**           | **DropoutSheetMetal**        | 0.375              | in   | [SendCutSend – Mild Steel](https://sendcutsend.com/materials/mild-steel/hot-rolled/)     |
+| **Other Fabrication / Fit** | **SlideFitTolerance**        | 0.031              | in   | Tolerance for slide fit                                                                   |
+|                       | **ResinPrintingWallThickness** | 1.00               | mm   | Wall thickness for resin 3D-printed parts                                                 |
+
+<iframe
+    src="https://gmail5210078.autodesk360.com/g/shares/SH90d2dQT28d5b602811248ad7af76b830e8"
+    width="100%"
+    height="750px"
+    style={{ border: "1px solid #ddd", borderRadius: "8px" }}
+/>
