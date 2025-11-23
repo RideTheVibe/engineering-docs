@@ -1,0 +1,21 @@
+---
+title: How Does Vibe Work?
+description: Lean to go, lean back to stop.
+---
+
+import ImageProvider from "src/Components/ImageProvider";
+import howDoesVibeWorkLight from "./images/HowDoesVibeWorkAnnotatedLight.png";
+import howDoesVibeWorkDark from "./images/HowDoesVibeWorkAnnotatedDark.png";
+
+###
+
+The Vibe self-balances in one axis using the motor power and uses the gyroscopic effect to keep upright while moving, like a normal bike would.
+In technical terms the problem we're solving is called the [inverted pendulum](https://en.wikipedia.org/wiki/Inverted_pendulum) problem.
+
+To help break down what is happening, we can refer to the following illustration.
+
+<ImageProvider lightImage={howDoesVibeWorkLight} darkImage={howDoesVibeWorkDark} />
+
+At `t = 0` the Vibe is at it's resting state, completely upright. When the user leans forward this induces a tilt (`t = 1`) in the vehicle due to the center of mass falling off the axle vertical line.
+The tilt is registered by the IMU and the motor controller applies power to the motor (proportional to the tilt), inducing a correction to reduce the angle `ø` to zero, trying to bring the vehicle to its vertical position (setpoint).
+When this is done hundreds of times a second, the vehicle starts moving in the direction the user is leaning.
