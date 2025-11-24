@@ -6,7 +6,8 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   assetPrefix: '/docs',
-    trailingSlash: false,
+    trailingSlash: true, // Force trailing slashes
+    skipTrailingSlashRedirect: true, // Prevent Next.js from redirecting
 };
 
 export default withMDX(config);
