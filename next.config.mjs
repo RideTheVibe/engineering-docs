@@ -6,6 +6,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   assetPrefix: '/docs',
+    trailingSlash: false,
 };
 
 export default withMDX(config);
