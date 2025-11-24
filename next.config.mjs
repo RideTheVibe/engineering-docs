@@ -5,16 +5,7 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-
-    // async redirects() {
-    //     return [
-    //         {
-    //             source: '/',
-    //             destination: 'https://ridethevibe.io',
-    //             permanent: false,
-    //         },
-    //     ]
-    // },
+  assetPrefix: '/docs',
 };
 
 export default withMDX(config);
